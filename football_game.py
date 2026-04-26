@@ -229,7 +229,7 @@ class FootballGame:
                 self.mode = "game_over"
             return
 
-            progress = min(1, (now - self.kick_started_at) / max(1, self.kick_duration))
+        progress = min(1, (now - self.kick_started_at) / max(1, self.kick_duration))
         eased = 1 - (1 - progress) * (1 - progress)
         sx, sy = self.ball_start
         tx, ty = self.ball_target
