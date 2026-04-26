@@ -2,6 +2,14 @@
 
 A 2D pygame desktop sports arcade with cricket, football, and badminton modes.
 
+## Play Online
+
+Play the browser version here:
+
+https://garvtanwar.github.io/SportsMania/index.html?v=football-fix-2
+
+Click once on the game area after it loads so the browser gives the game keyboard and mouse focus.
+
 ## Gameplay
 
 Open the app and choose Cricket, Football, or Badminton.
