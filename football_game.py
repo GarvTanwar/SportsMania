@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+import asyncio
 import math
 from pathlib import Path
 import random
@@ -69,7 +70,7 @@ class FootballGame:
         except (FileNotFoundError, pygame.error):
             return None
 
-    def run(self):
+    async def run(self):
         running = True
         while running:
             now = pygame.time.get_ticks()
@@ -87,6 +88,7 @@ class FootballGame:
             self.draw()
             pygame.display.flip()
             self.clock.tick(FPS)
+            await asyncio.sleep(0)
 
         pygame.quit()
         if self.exit_on_close:

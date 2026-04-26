@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+import asyncio
 import math
 from pathlib import Path
 import random
@@ -71,7 +72,7 @@ class CricketGame:
         except (FileNotFoundError, pygame.error):
             return None
 
-    def run(self):
+    async def run(self):
         """Main game loop: handle input, update active scene, then redraw at a fixed FPS."""
         running = True
         while running:
@@ -90,6 +91,7 @@ class CricketGame:
             self.draw()
             pygame.display.flip()
             self.clock.tick(FPS)
+            await asyncio.sleep(0)
 
         pygame.quit()
         if self.exit_on_close:

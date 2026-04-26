@@ -1,3 +1,4 @@
+import asyncio
 import sys
 from pathlib import Path
 
@@ -35,7 +36,7 @@ class SportMenu:
                 loaded[sport] = None
         return loaded
 
-    def run(self):
+    async def run(self):
         running = True
         while running:
             for event in pygame.event.get():
@@ -45,47 +46,48 @@ class SportMenu:
                     if event.key in (pygame.K_ESCAPE, pygame.K_q):
                         running = False
                     elif event.key in (pygame.K_1, pygame.K_c):
-                        self.open_cricket()
+                        await self.open_cricket()
                     elif event.key in (pygame.K_2, pygame.K_f):
-                        self.open_football()
+                        await self.open_football()
                     elif event.key in (pygame.K_3, pygame.K_b):
-                        self.open_badminton()
+                        await self.open_badminton()
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     if self.cricket_rect().collidepoint(event.pos):
-                        self.open_cricket()
+                        await self.open_cricket()
                     elif self.football_rect().collidepoint(event.pos):
-                        self.open_football()
+                        await self.open_football()
                     elif self.badminton_rect().collidepoint(event.pos):
-                        self.open_badminton()
+                        await self.open_badminton()
                     elif self.quit_rect().collidepoint(event.pos):
                         running = False
 
             self.draw()
             pygame.display.flip()
             self.clock.tick(FPS)
+            await asyncio.sleep(0)
 
         pygame.quit()
         sys.exit()
 
-    def open_cricket(self):
+    async def open_cricket(self):
         from cricket_game import CricketGame
 
         pygame.quit()
-        CricketGame(exit_on_close=False, quit_label="Sports Menu").run()
+        await CricketGame(exit_on_close=False, quit_label="Sports Menu").run()
         self.__init__()
 
-    def open_football(self):
+    async def open_football(self):
         from football_game import FootballGame
 
         pygame.quit()
-        FootballGame(exit_on_close=False, quit_label="Sports Menu").run()
+        await FootballGame(exit_on_close=False, quit_label="Sports Menu").run()
         self.__init__()
 
-    def open_badminton(self):
+    async def open_badminton(self):
         from badminton_game import BadmintonGame
 
         pygame.quit()
-        BadmintonGame(exit_on_close=False, quit_label="Sports Menu").run()
+        await BadmintonGame(exit_on_close=False, quit_label="Sports Menu").run()
         self.__init__()
 
     def draw(self):
@@ -222,9 +224,9 @@ class SportMenu:
         return pygame.Rect(WIDTH // 2 - 115, 565, 230, 48)
 
 
-def main():
-    SportMenu().run()
+async def main():
+    await SportMenu().run()
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
