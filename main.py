@@ -1,5 +1,4 @@
 import asyncio
-import sys
 from pathlib import Path
 
 import pygame
@@ -67,26 +66,22 @@ class SportMenu:
             await asyncio.sleep(0)
 
         pygame.quit()
-        sys.exit()
 
     async def open_cricket(self):
         from cricket_game import CricketGame
 
-        pygame.quit()
         await CricketGame(exit_on_close=False, quit_label="Sports Menu").run()
         self.__init__()
 
     async def open_football(self):
         from football_game import FootballGame
 
-        pygame.quit()
         await FootballGame(exit_on_close=False, quit_label="Sports Menu").run()
         self.__init__()
 
     async def open_badminton(self):
         from badminton_game import BadmintonGame
 
-        pygame.quit()
         await BadmintonGame(exit_on_close=False, quit_label="Sports Menu").run()
         self.__init__()
 

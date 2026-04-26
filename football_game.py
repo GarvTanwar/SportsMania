@@ -90,8 +90,8 @@ class FootballGame:
             self.clock.tick(FPS)
             await asyncio.sleep(0)
 
-        pygame.quit()
         if self.exit_on_close:
+            pygame.quit()
             sys.exit()
 
     def handle_key(self, key, now):
