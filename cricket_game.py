@@ -598,6 +598,9 @@ class CricketGame:
             return
         max_w = 430
         max_h = 300
+        if self.trophy_image.get_width() <= 0 or self.trophy_image.get_height() <= 0:
+            self.draw_cup(WIDTH // 2, panel.y + 190)
+            return
         scale = min(max_w / self.trophy_image.get_width(), max_h / self.trophy_image.get_height())
         size = (int(self.trophy_image.get_width() * scale), int(self.trophy_image.get_height() * scale))
         image = pygame.transform.smoothscale(self.trophy_image, size)

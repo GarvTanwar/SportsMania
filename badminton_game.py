@@ -214,7 +214,7 @@ class BadmintonGame:
         if self.shuttle_active:
             sx, sy = self.shuttle_start
             tx, ty = self.shuttle_target
-            progress = min(1, (now - self.rally_started_at) / self.rally_duration)
+            progress = min(1, (now - self.rally_started_at) / max(1, self.rally_duration))
             eased = progress * progress
             arc = math.sin(progress * math.pi) * 40
             self.shuttle_pos = (sx + (tx - sx) * eased, sy + (ty - sy) * eased - arc)
@@ -501,6 +501,9 @@ class BadmintonGame:
             return
         max_w = 430
         max_h = 300
+        if self.trophy_image.get_width() <= 0 or self.trophy_image.get_height() <= 0:
+            self.draw_cup(WIDTH // 2, panel.y + 190)
+            return
         scale = min(max_w / self.trophy_image.get_width(), max_h / self.trophy_image.get_height())
         size = (int(self.trophy_image.get_width() * scale), int(self.trophy_image.get_height() * scale))
         image = pygame.transform.smoothscale(self.trophy_image, size)

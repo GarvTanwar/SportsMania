@@ -28,7 +28,11 @@ class Ball:
             return
 
         self.y += self.speed
-        travel = min(1, (self.y - self.start_y) / ((self.target_y + 90) - self.start_y))
+        travel_distance = (self.target_y + 90) - self.start_y
+        if travel_distance <= 0:
+            travel = 1
+        else:
+            travel = min(1, (self.y - self.start_y) / travel_distance)
         self.x = self.start_x + (self.end_x - self.start_x) * travel
         if self.y >= self.target_y + 90:
             self.active = False

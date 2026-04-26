@@ -229,7 +229,7 @@ class FootballGame:
                 self.mode = "game_over"
             return
 
-        progress = min(1, (now - self.kick_started_at) / self.kick_duration)
+            progress = min(1, (now - self.kick_started_at) / max(1, self.kick_duration))
         eased = 1 - (1 - progress) * (1 - progress)
         sx, sy = self.ball_start
         tx, ty = self.ball_target
@@ -425,7 +425,7 @@ class FootballGame:
     def draw_player(self):
         x, y = WIDTH // 2 - 62, 486
         kick = self.ball_active
-        swing = int(math.sin(min(1, (pygame.time.get_ticks() - self.kick_started_at) / self.kick_duration) * math.pi) * 34) if kick else 0
+        swing = int(math.sin(min(1, (pygame.time.get_ticks() - self.kick_started_at) / max(1, self.kick_duration)) * math.pi) * 34) if kick else 0
         pygame.draw.ellipse(self.screen, (29, 84, 52), (x - 30, y + 38, 70, 14))
         pygame.draw.circle(self.screen, (221, 176, 128), (x, y - 58), 13)
         pygame.draw.rect(self.screen, (61, 102, 196), (x - 16, y - 43, 32, 54), border_radius=8)
@@ -521,6 +521,9 @@ class FootballGame:
             return
         max_w = 430
         max_h = 300
+        if self.trophy_image.get_width() <= 0 or self.trophy_image.get_height() <= 0:
+            self.draw_cup(WIDTH // 2, panel.y + 190)
+            return
         scale = min(max_w / self.trophy_image.get_width(), max_h / self.trophy_image.get_height())
         size = (int(self.trophy_image.get_width() * scale), int(self.trophy_image.get_height() * scale))
         image = pygame.transform.smoothscale(self.trophy_image, size)

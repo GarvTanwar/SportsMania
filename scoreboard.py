@@ -14,18 +14,24 @@ class Scoreboard:
         return f"{balls // 6}.{balls % 6}"
 
     def run_rate(self, runs, balls):
-        if balls == 0:
+        if balls <= 0:
             return "0.00"
-        return f"{runs / (balls / 6):.2f}"
+        overs = balls / 6
+        if overs <= 0:
+            return "0.00"
+        return f"{runs / overs:.2f}"
 
     def required_rate(self, state):
         remaining_runs = max(0, state.target - state.runs)
         remaining_balls = max(0, state.total_balls - state.balls)
         if remaining_runs == 0:
             return "0.00"
-        if remaining_balls == 0:
+        if remaining_balls <= 0:
             return "--"
-        return f"{remaining_runs / (remaining_balls / 6):.2f}"
+        remaining_overs = remaining_balls / 6
+        if remaining_overs <= 0:
+            return "--"
+        return f"{remaining_runs / remaining_overs:.2f}"
 
     def draw(self, surface, state):
         pygame.draw.rect(surface, self.bg, (0, 0, self.width, 76))

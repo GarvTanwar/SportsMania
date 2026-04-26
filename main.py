@@ -143,6 +143,8 @@ class SportMenu:
     def draw_card_image(self, image, rect):
         max_w = 170
         max_h = 108
+        if image.get_width() <= 0 or image.get_height() <= 0:
+            return
         scale = min(max_w / image.get_width(), max_h / image.get_height())
         size = (int(image.get_width() * scale), int(image.get_height() * scale))
         scaled = pygame.transform.smoothscale(image, size)
